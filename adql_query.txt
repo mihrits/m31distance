@@ -1,0 +1,15 @@
+SELECT ce.source_id, ce.pf, ce.type_best_classification, ce.int_average_g, 
+s.ra, s.dec, s.parallax, s.parallax_error, s.parallax_over_error, s.pmra, s.pmdec, 
+s.phot_g_mean_mag, s.bp_rp, 
+pan.obj_id, pan.g_mean_psf_mag, pan.g_mean_psf_mag_error, pan.r_mean_psf_mag, pan.r_mean_psf_mag_error, 
+pan.i_mean_psf_mag, pan.i_mean_psf_mag_error, pan.z_mean_psf_mag, pan.z_mean_psf_mag_error
+FROM gaiadr2.vari_cepheid AS ce
+JOIN gaiaedr3.dr2_neighbourhood AS nh ON nh.dr2_source_id=ce.source_id
+JOIN gaiaedr3.gaia_source AS s ON s.source_id=nh.dr3_source_id
+JOIN gaiaedr3.panstarrs1_best_neighbour AS bn ON bn.source_id=s.source_id
+JOIN gaiadr2.panstarrs1_original_valid AS pan ON pan.obj_id=bn.original_ext_source_id
+WHERE bn.number_of_mates=0
+
+
+SELECT pan.ID, pan.RAJ2000, pan.DEJ2000, pan.Pr, pan.e_Pr, pan.rP1mag, pan.e_rP1mag, pan.iP1mag, pan.e_iP1mag, pan.gP1mag, pan.e_gP1mag, pan.Type
+FROM "J/AJ/156/130/main" as pan
